@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 using static Unity.VisualScripting.Member;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Aflyscript : MonoBehaviour
 {
+    [SerializeField] private float _CameraSensitivity = 1;
 
     public AudioSource source;
     public AudioLoudnessDetection detector;
@@ -22,15 +24,16 @@ public class Aflyscript : MonoBehaviour
     public float speed = 2;
     
 
-    public float speedH = 2.0f;
-    public float speedV = 2.0f;
+ 
+   
+    private float customgravity = 9f;
+    private Vector2 _LookRot = new Vector2(90, 0);
 
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
+            
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; 
+       
 
 
 
@@ -40,31 +43,43 @@ public class Aflyscript : MonoBehaviour
 
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(x, 0, z);
-        transform.Translate(movement * speed * Time.deltaTime);
+        float x = Input.GetAxisRaw("Horizontal") * speed;
+        float y = Input.GetAxisRaw("Vertical") * speed;
 
-        yaw += speedH * Input.GetAxis("Mouse X");
-        pitch -= speedV * Input.GetAxis("Mouse Y");
+        Vector3 move = transform.right * x + transform.forward * y;
+        rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
 
-        transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
+        _LookRot.x += Input.GetAxis("Mouse X") * _CameraSensitivity;
+        _LookRot.y += Input.GetAxis("Mouse Y") * _CameraSensitivity;
+        _LookRot.y = Mathf.Clamp(_LookRot.y, -90, 90);
+
+        transform.localRotation = Quaternion.AngleAxis(_LookRot.x, Vector3.up);
+        transform.localRotation = Quaternion.AngleAxis(_LookRot.y, Vector3.left);
+        transform.localRotation = Quaternion.AngleAxis(_LookRot.y, Vector3.left);
+
     }
 
     
     void FixedUpdate()
     {
+
+        rb.AddForce(new Vector3(0, -2.0f, 0) * rb.mass * customgravity, ForceMode.Acceleration);
+
         float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
 
         if (loudness < threshold)
             loudness = 0;
 
-        transform.Translate(Vector3.up * loudness * moveSpeed * Time.deltaTime);
+        rb.AddForce(Vector3.up * loudness * moveSpeed * Time.deltaTime, ForceMode.VelocityChange);
 
 
 
     }
+
+
+
+   
 }
 
 

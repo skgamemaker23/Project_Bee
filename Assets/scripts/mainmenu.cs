@@ -8,6 +8,8 @@ public class mainmenu : MonoBehaviour
 
     public GameObject tutorial;
 
+    public GameObject credits; 
+
     public string scene; 
     
     public void Play()
@@ -24,6 +26,11 @@ public class mainmenu : MonoBehaviour
         root.SetActive(false);
         settings.SetActive(true);
     }
+    public void Credits()
+    {
+        root.SetActive(false);
+        credits.SetActive(true);
+    }
     public void QuitButton()
     {
 
@@ -36,6 +43,7 @@ public class mainmenu : MonoBehaviour
         root.SetActive(true);
         settings.SetActive(false);
         tutorial.SetActive(false);
+        credits.SetActive(false);
 
     }
 
