@@ -27,13 +27,17 @@ public class ScoreManager : MonoBehaviour
         {
             score += 10;
             UpdateScoreUI();
+            Debug.Log("You pollinated");
         }
         if (other.gameObject.CompareTag("flower2"))
         {
             score += 5;
             UpdateScoreUI();
-        }
+            Debug.Log("You pollinated");
 
+     }
     }
+
+    
 }
    

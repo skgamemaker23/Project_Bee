@@ -11,7 +11,8 @@ public class pause: MonoBehaviour
    
    
   
-    public GameObject pauusemenu;
+    public GameObject pausemenu;
+
     
     private bool paused;
 
@@ -22,7 +23,7 @@ public class pause: MonoBehaviour
 
     private void Start()
     {
-        pauusemenu.SetActive(false);
+        pausemenu.SetActive(false);
 
 
     }
@@ -32,13 +33,13 @@ public class pause: MonoBehaviour
         {
             if (!paused)
             {
-                pauusemenu.SetActive(true);
+                pausemenu.SetActive(true);
                 paused = true;
                 PauseGame();
             }
             else
             {
-                pauusemenu.SetActive(false);
+                pausemenu.SetActive(false);
                 paused = false;
                 
                 ResumeGame();
@@ -48,11 +49,13 @@ public class pause: MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
+
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
+
     }
 
 

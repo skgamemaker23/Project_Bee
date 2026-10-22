@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 using static Unity.VisualScripting.Member;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Aflyscript : MonoBehaviour
+public class flyscript : MonoBehaviour
 {
     [SerializeField] private float _CameraSensitivity = 1;
 
@@ -44,25 +44,26 @@ public class Aflyscript : MonoBehaviour
     void Update()
     {
 
-        float x = Input.GetAxisRaw("Horizontal") * speed;
-        float y = Input.GetAxisRaw("Vertical") * speed;
-
-        Vector3 move = transform.right * x + transform.forward * y;
-        rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
-
+        
         _LookRot.x += Input.GetAxis("Mouse X") * _CameraSensitivity;
         _LookRot.y += Input.GetAxis("Mouse Y") * _CameraSensitivity;
         _LookRot.y = Mathf.Clamp(_LookRot.y, -90, 90);
 
-        transform.localRotation = Quaternion.AngleAxis(_LookRot.x, Vector3.up);
-        transform.localRotation = Quaternion.AngleAxis(_LookRot.y, Vector3.left);
-        transform.localRotation = Quaternion.AngleAxis(_LookRot.y, Vector3.left);
+        rb.MoveRotation(Quaternion.AngleAxis(_LookRot.x, Vector3.up));
+     
+        rb.MoveRotation(Quaternion.AngleAxis(_LookRot.y, Vector3.left));
 
     }
 
     
     void FixedUpdate()
     {
+        
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
+            Vector3 move = new Vector3(h, 0, v).normalized;
+            rb.AddForce(move * speed * Time.fixedDeltaTime);
+        
 
         rb.AddForce(new Vector3(0, -2.0f, 0) * rb.mass * customgravity, ForceMode.Acceleration);
 
