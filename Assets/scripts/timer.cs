@@ -31,7 +31,8 @@ public class Timer : MonoBehaviour
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
-                timerText.text = "Time Remaining: " + timeRemaining.ToString();
+                int seconds = Mathf.FloorToInt(timeRemaining);
+                timerText.text = "Time Remaining: " + seconds.ToString();
 
 
             }
