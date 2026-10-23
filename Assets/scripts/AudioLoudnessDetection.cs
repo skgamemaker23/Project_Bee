@@ -22,7 +22,7 @@ public class AudioLoudnessDetection : MonoBehaviour
     {
         //get the first microphone in device list 
         string microphoneName = Microphone.devices[0];
-        microphoneClip = Microphone.Start(microphoneName,true, 20, AudioSettings.outputSampleRate);
+        microphoneClip = Microphone.Start(microphoneName,true, 20, AudioSettings.outputSampleRate); // turns mic input to audio clip 
     }
 
     public float GetLoudnessFromMicrophone()
@@ -31,7 +31,7 @@ public class AudioLoudnessDetection : MonoBehaviour
     }
     public float GetLoudnessFromAudioClip(int clipPosition, AudioClip clip)
     {
-        int startPosition = clipPosition - sampleWindow;
+        int startPosition = clipPosition - sampleWindow; 
 
         if (startPosition < 0 )
         {

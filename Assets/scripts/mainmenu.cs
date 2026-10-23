@@ -10,11 +10,11 @@ public class mainmenu : MonoBehaviour
 
     public GameObject credits; 
 
-    public string scene; 
+    public string playscene; 
     
     public void Play()
     {
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(playscene);
     }
     public void HowToPlay()
     {

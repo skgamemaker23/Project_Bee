@@ -21,22 +21,13 @@ public class ScoreManager : MonoBehaviour
     {
         scoreText.text = "Score: " + score.ToString(); // Display the score in the UI
     }
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("flower1"))
-        {
-            score += 10;
-            UpdateScoreUI();
-            Debug.Log("You pollinated");
-        }
-        if (other.gameObject.CompareTag("flower2"))
-        {
-            score += 5;
-            UpdateScoreUI();
+        
             Debug.Log("You pollinated");
 
      }
-    }
+    
 
     
 }

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-/// <summary>
-/// Sets a custom cursor and starts it visually in the center of the screen.
-/// </summary>
+
+// Sets a custom cursor and starts it visually in the center of the screen.
+//to make the cursor cutesy bee shape 
 public class StartCursor : MonoBehaviour
 {
     [Header("Custom Cursor Settings")]

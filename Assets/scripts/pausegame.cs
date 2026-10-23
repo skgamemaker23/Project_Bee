@@ -1,24 +1,30 @@
+using CitrioN.Common;
+using System.Collections.Frozen;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
-public class pausemenu : MonoBehaviour
+
+//using unity discussions post with edits
+public class pause: MonoBehaviour
 {
-    [Header("UI Sliders")]
-
+   [Header("Set Up")]
+    public GameObject pausemenu;
     public UnityEngine.UI.Slider musicSlider;
     public UnityEngine.UI.Slider sfxSlider;
 
-
-
-    [Header("Settings")]
     public AudioMixer audioMixer;
 
+
+    //set up pllayerpref keys 
     private const string MusicKey = "MusicVolume";
     private const string SFXKey = "SFXVolume";
+    private bool paused;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
+        pausemenu.SetActive(false);
         float music = PlayerPrefs.GetFloat(MusicKey);
         float sfx = PlayerPrefs.GetFloat(SFXKey);
 
@@ -36,12 +42,37 @@ public class pausemenu : MonoBehaviour
 
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+
+    }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!paused)
+            {
+                pausemenu.SetActive(true);
+                paused = true;
+                PauseGame();
+            }
+            else
+            {
+                pausemenu.SetActive(false);
+                paused = false;
+                
+                ResumeGame();
+            }
+        }
+    }
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResumeGame()
     {
-        
+        Time.timeScale = 1;
+
     }
     public void SetMusicVolume(float value)
     {
@@ -56,4 +87,13 @@ public class pausemenu : MonoBehaviour
         PlayerPrefs.SetFloat(SFXKey, value);
         PlayerPrefs.Save();
     }
+
+
+
+
+
+
+
+
+
 }
