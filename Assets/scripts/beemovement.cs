@@ -5,7 +5,7 @@ using UnityEngine;
 public class BeeController : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 15f;
+    public float moveSpeed = 600f;
     public Rigidbody rb;
 
     [Header("Mouse Look")]
@@ -18,7 +18,9 @@ public class BeeController : MonoBehaviour
     public AudioLoudnessDetection detector;
 
     public float loudnessSensibility = 100;
-    public float threshold = 0.1f;
+    public float threshold = 0.01f;
+
+    public Vector3 customGravity = new Vector3(0, -2f, 0);
 
     void Start()
     {
@@ -38,6 +40,8 @@ public class BeeController : MonoBehaviour
     {
         HandleMovement();
         HandleFlying();
+        //gravity was acting funny so i tried to fix
+        rb.AddForce(Vector3.down  * Time.deltaTime, ForceMode.Force);
     }
 
     void HandleMouseLook()
@@ -51,7 +55,7 @@ public class BeeController : MonoBehaviour
 
         // Vertical rotation (camera)
         pitch -= mouseY; 
-        pitch = Mathf.Clamp(pitch, -35f, 50f); // clamp makes sure you can't go 360 top to bottom 
+        pitch = Mathf.Clamp(pitch, -20f, 50f); // clamp makes sure you can't go 360 top to bottom 
         cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 
@@ -72,6 +76,7 @@ public class BeeController : MonoBehaviour
 
     void HandleFlying()
     {
+
         //grabs mic input using detector 
         float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
 

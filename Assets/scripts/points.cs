@@ -15,20 +15,23 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreUI(); // Update the UI with the initial score
     }
 
+    private void Update()
+    {
+        UpdateScoreUI();
+    }
 
 
     void UpdateScoreUI()
     {
         scoreText.text = "Score: " + score.ToString(); // Display the score in the UI
     }
-    private void OnCollisionEnter(Collision collision)
+
+    public void AddPoints(int points)
     {
-        
-            Debug.Log("You pollinated");
+        score += points;
+    }
 
-     }
     
-
     
 }
    
